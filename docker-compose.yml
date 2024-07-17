@@ -2,20 +2,20 @@ version: '3'
 
 
 services:
-  app:
-    build: .
-    volumes:
-      - .:/app
-
-  nginx:
-    image: nginx:latest
+  python_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "5000:8080"
 
-    depends_on:
-      - glassfish
-    networks:
-      - mynetwork
+services:
+   nginx:
+      image: nginx
+      volumes:
+         - ./nginx:/etc/nginx/conf.d
+         - ./front-end:/var/www/front-end
+      ports:
+         - "80:80"
 
-networks:
-  mynetwork:
+
